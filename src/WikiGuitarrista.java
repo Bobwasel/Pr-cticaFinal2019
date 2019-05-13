@@ -1,3 +1,4 @@
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -12,10 +13,11 @@ public class WikiGuitarrista {
     		usuario = JOptionPane.showInputDialog(null, "Usuario");
     	}
     	
+    	List<Usuario> lista = Usuario.listaCompleta();
+    	
     	Ventana ventana = new Ventana();
     	JPanel panel = new JPanel();
     	ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	
     	
     }
 }
