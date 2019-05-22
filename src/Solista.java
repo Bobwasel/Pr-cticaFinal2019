@@ -20,8 +20,5 @@ public class Solista extends Guitarrista {
 			return nombreModelo;
 		}
 		
-		public void setNombreModelo() {
-			this.nombreModelo = nombreModelo;
-		}
 	}
 }
