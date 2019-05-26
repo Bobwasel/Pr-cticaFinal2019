@@ -1,6 +1,8 @@
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -59,8 +61,19 @@ public class Panel extends JPanel {
 	}
 	
 	private void PanelInicio() {
-		setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
-		
+		 setLayout(new GridLayout(3, 0));
+		Boton boton1 = new Boton("Clásica");
+		Boton boton2 = new Boton("Acústica");
+		Boton boton3 = new Boton("Eléctrica");
+		add(boton1);
+		add(boton2);
+		add(boton3);
+	}
+	
+	public static Panel PanelDeInicio() {
+		Panel panel = new Panel();
+		panel.PanelInicio();
+		return panel;
 	}
 
 }

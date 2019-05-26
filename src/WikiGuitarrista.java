@@ -11,37 +11,37 @@ import javax.swing.JOptionPane;
 
 public class WikiGuitarrista {
 	private static final DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
+	
+	public static void inicio() {
+		JLabel mensaje = new JLabel("<html><h2>¿De qué modelo de guitarra quieres buscar a tus guitarristas?");
+		Panel panel = Panel.PanelDeInicio();
+		Ventana ventana = new Ventana();
+		ventana.add(mensaje, BorderLayout.NORTH);
+		ventana.add(panel);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 	public static void main(String[] args) {
-
-		String codeUser;
-		boolean isOk;
-		do {
-			isOk = true;
-			codeUser = JOptionPane.showInputDialog("Introduzca el código de usuario(10 dígitos)");
-			for (int i = 0; i < codeUser.length(); i++) {
-				if (codeUser.charAt(i) < '0' || codeUser.charAt(i) > '9') {
-					isOk = false;
-				}
-			}
-		} while (codeUser.length() != 10 || !isOk);
+		Lector lector = new Lector();
 
 		List<Usuario> usuariosRegistrados = Usuario.listaCompleta();
+		lector.bloquea();
+		String leido = lector.getLectura();
+		lector.dispose();
 		boolean existe = false;
 		for (int i = 0; i < usuariosRegistrados.size(); i++) {
 			Usuario usuario = usuariosRegistrados.get(i);
-			if (codeUser.equals(usuario.getCodigoUsuario())) {
+			if (leido.equals(usuario.getCodigoUsuario())) {
 				existe = true;
 				break;
 			}
 		}
-		Ventana ventana = new Ventana();
-		JLabel etiqueta = new JLabel();
 
-		String codigo = codeUser;
+		String codigo = leido;
 		if (existe) {
-			System.out.println("blabla");
+			inicio();
 		} else {
+			Ventana ventana = new Ventana();
+			JLabel etiqueta = new JLabel();
 			Panel panel = Panel.formularioRegistro();
 			Boton boton = new Boton("Registrarse");
 			ventana.add(etiqueta, BorderLayout.SOUTH);
@@ -60,14 +60,14 @@ public class WikiGuitarrista {
 					Usuario.escribirFichero(usuario);
 					JOptionPane.showMessageDialog(null,
 							"Se ha registrado correctamente, recuerde que su usuario es " + codigo);
-					ventana.removeAll();
-					//ventana.add();
+					ventana.dispose();
+					inicio();
 				}
 			});
 			ventana.add(panel);
 			ventana.add(boton, BorderLayout.PAGE_END);
+			ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 }

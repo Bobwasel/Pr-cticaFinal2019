@@ -53,7 +53,7 @@ public class Usuario {
 		return dni;
 	}
 
-	static File file = new File("/home/maria/Escritorio/Usuarios.txt");
+	static File file = new File("./Usuarios.txt");
 
 	public static void escribirFichero(Usuario usuario) {
 		List<String> lista = new ArrayList<>();
