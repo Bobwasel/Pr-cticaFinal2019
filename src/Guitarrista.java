@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Guitarrista {
+public class Guitarrista implements Serializable {
 
 	private String nombre;
 	private int edad;

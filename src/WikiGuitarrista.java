@@ -1,25 +1,30 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class WikiGuitarrista {
 	private static final DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	
+
 	public static void inicio() {
-		JLabel mensaje = new JLabel("<html><h2>¿De qué modelo de guitarra quieres buscar a tus guitarristas?");
+		JLabel mensaje = new JLabel("¿Qué desea realizar?");
+		mensaje.setFont(new Font("Arial", Font.BOLD, 84));
 		Panel panel = Panel.PanelDeInicio();
 		Ventana ventana = new Ventana();
 		ventana.add(mensaje, BorderLayout.NORTH);
 		ventana.add(panel);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+
 	public static void main(String[] args) {
 		Lector lector = new Lector();
 
