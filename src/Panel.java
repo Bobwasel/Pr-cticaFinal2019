@@ -6,8 +6,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -76,19 +78,21 @@ public class Panel extends JPanel {
 		panel.CargarFormularioRegistro();
 		return panel;
 	}
+
 	private void anaydirAlFichero() {
-		 JFileChooser pedirFichero=new JFileChooser();
-	     pedirFichero.showOpenDialog(null);
-	     InformacionGuitarrista.anyadeGuitarrista(pedirFichero.getSelectedFile());
+		JFileChooser pedirFichero = new JFileChooser();
+		pedirFichero.showOpenDialog(null);
+		InformacionGuitarrista.anyadeGuitarrista(pedirFichero.getSelectedFile());
 	}
+
 	private void listarFichero() {
-		 JFileChooser pedirFichero=new JFileChooser();
-	     pedirFichero.showOpenDialog(null);
-	     InformacionGuitarrista.listaGuitarristas(pedirFichero.getSelectedFile());
-	     listaHTML();
+		JFileChooser pedirFichero = new JFileChooser();
+		pedirFichero.showOpenDialog(null);
+		InformacionGuitarrista.listaGuitarristas(pedirFichero.getSelectedFile());
+		listaHTML();
 	}
-	
-	private void panelAnayeGuitarrista() {
+
+	private void panelAnyadeGuitarrista() {
 		setLayout(new GridLayout(3, 0, 20, 20));
 		add(nombre);
 		add(introduceNombre);
@@ -97,10 +101,11 @@ public class Panel extends JPanel {
 		add(estiloMusical);
 		add(introduceEstiloMusical);
 	}
+
 	private void anyadirGuitarrista() {
 		Ventana ventana = new Ventana();
 		Panel panel = new Panel();
-		panel.panelAnayeGuitarrista();
+		panel.panelAnyadeGuitarrista();
 		Boton boton = new Boton("AÑADIR");
 		boton.addActionListener(new ActionListener() {
 			@Override
@@ -118,18 +123,44 @@ public class Panel extends JPanel {
 		ventana.add(boton, BorderLayout.PAGE_END);
 		ventana.setExtendedState(Frame.MAXIMIZED_BOTH);
 	}
-	
+
+	private void panelModificar() {
+		panelAnyadeGuitarrista();
+	}
+
+	private void modificarGuitarrista() {
+		Guitarrista g ;
+		Ventana ventana = new Ventana();
+		Panel panel = new Panel();
+		panel.panelModificar();
+		Boton boton = new Boton("MODIFICAR");
+		boton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nombre = panel.introduceNombre.getText();
+				int edad = Integer.parseInt(panel.introduceEdad.getText());
+				String estiloMusical = panel.introduceEstiloMusical.getText();
+				Guitarrista guitarrista = new Guitarrista(nombre, edad, estiloMusical);
+				InformacionGuitarrista.modificarGuitarrista(guitarrista);
+				ventana.dispose();
+			}
+		});
+		ventana.add(panel);
+		ventana.add(boton, BorderLayout.PAGE_END);
+		ventana.setExtendedState(Frame.MAXIMIZED_BOTH);
+	}
+
 	private void PanelInicio() {
 		setLayout(new GridLayout(2, 0));
-		Map<JButton, ActionListener> botones=new HashMap<>();
-        botones.put(new JButton("Añadir"), e-> anyadirGuitarrista());
-        botones.put(new JButton("Listar"), e-> listarFichero());
-        for(Map.Entry<JButton,ActionListener> boton:
-            botones.entrySet()){
-            boton.getKey().setMargin(new Insets(20, 20, 20, 20));
-            boton.getKey().addActionListener(boton.getValue());
-            add(boton.getKey());
-        }
+		Map<JButton, ActionListener> botones = new HashMap<>();
+		botones.put(new JButton("Añadir"), e -> anyadirGuitarrista());
+		botones.put(new JButton("Listar"), e -> listarFichero());
+		botones.put(new JButton("Modificar"), e -> modificarGuitarrista());
+		for (Map.Entry<JButton, ActionListener> boton : botones.entrySet()) {
+			boton.getKey().setMargin(new Insets(20, 20, 20, 20));
+			boton.getKey().addActionListener(boton.getValue());
+			add(boton.getKey());
+		}
 	}
 
 	public static Panel PanelDeInicio() {
@@ -137,7 +168,7 @@ public class Panel extends JPanel {
 		panel.PanelInicio();
 		return panel;
 	}
-	
+
 	private void listaHTML() {
 		JLabel mensaje = new JLabel(InformacionGuitarrista.listadoHTML());
 		Ventana ventana = new Ventana();
